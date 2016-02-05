@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="IdAccount" />
+    </Key>
+    <Property Name="IdAccount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Balance" Type="Double" />
+    <Property Name="TypeFK_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TypeAccount" Relationship="Self.FK_Account_TypeAccount" FromRole="Account" ToRole="TypeAccount" />
+    <NavigationProperty Name="User" Relationship="Self.FK_User_Account" FromRole="Account" ToRole="User" />
+  </EntityType>
+  <EntityType Name="TypeAccount">
+    <Key>
+      <PropertyRef Name="IdType" />
+    </Key>
+    <Property Name="IdType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="Self.FK_Account_TypeAccount" FromRole="TypeAccount" ToRole="Account" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="IdUser" />
+    </Key>
+    <Property Name="IdUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Brithday" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="AccountFK_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="Self.FK_User_Account" FromRole="User" ToRole="Account" />
+  </EntityType>
+  <Association Name="FK_Account_TypeAccount">
+    <End Role="TypeAccount" Type="Self.TypeAccount" Multiplicity="1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeAccount">
+        <PropertyRef Name="IdType" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="TypeFK_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Account">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="IdAccount" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="AccountFK_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBTestEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Account" EntityType="Self.Account" />
+    <EntitySet Name="TypeAccount" EntityType="Self.TypeAccount" />
+    <EntitySet Name="User" EntityType="Self.User" />
+    <AssociationSet Name="FK_Account_TypeAccount" Association="Self.FK_Account_TypeAccount">
+      <End Role="TypeAccount" EntitySet="TypeAccount" />
+      <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Account" Association="Self.FK_User_Account">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

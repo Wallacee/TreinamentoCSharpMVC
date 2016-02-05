@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DBTestModelStoreContainer" CdmEntityContainer="DBTestEntities">
+    <EntitySetMapping Name="Account">
+      <EntityTypeMapping TypeName="DBTestModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="IdAccount" ColumnName="IdAccount" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="TypeFK_ID" ColumnName="TypeFK_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TypeAccount">
+      <EntityTypeMapping TypeName="DBTestModel.TypeAccount">
+        <MappingFragment StoreEntitySet="TypeAccount">
+          <ScalarProperty Name="IdType" ColumnName="IdType" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="DBTestModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Brithday" ColumnName="Brithday" />
+          <ScalarProperty Name="AccountFK_ID" ColumnName="AccountFK_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

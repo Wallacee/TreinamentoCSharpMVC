@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="IdAccount" />
+    </Key>
+    <Property Name="IdAccount" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Balance" Type="float" />
+    <Property Name="TypeFK_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TypeAccount">
+    <Key>
+      <PropertyRef Name="IdType" />
+    </Key>
+    <Property Name="IdType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="IdUser" />
+    </Key>
+    <Property Name="IdUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="Brithday" Type="date" Nullable="false" />
+    <Property Name="AccountFK_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Account_TypeAccount">
+    <End Role="TypeAccount" Type="Self.TypeAccount" Multiplicity="1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeAccount">
+        <PropertyRef Name="IdType" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="TypeFK_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Account">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="IdAccount" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="AccountFK_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBTestModelStoreContainer">
+    <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TypeAccount" EntityType="Self.TypeAccount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Account_TypeAccount" Association="Self.FK_Account_TypeAccount">
+      <End Role="TypeAccount" EntitySet="TypeAccount" />
+      <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Account" Association="Self.FK_User_Account">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
